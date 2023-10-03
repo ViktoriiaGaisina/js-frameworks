@@ -1,4 +1,4 @@
-package cz.eg.hr.rest;
+package cz.eg.hr.rest.exception;
 
 import java.util.List;
 

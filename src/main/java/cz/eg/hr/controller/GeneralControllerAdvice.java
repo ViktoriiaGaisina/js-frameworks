@@ -1,7 +1,8 @@
 package cz.eg.hr.controller;
 
-import cz.eg.hr.rest.Errors;
-import cz.eg.hr.rest.ValidationError;
+import cz.eg.hr.rest.exception.Errors;
+import cz.eg.hr.rest.exception.ValidationError;
+import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
