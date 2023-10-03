@@ -1,17 +1,19 @@
 package cz.eg.hr.dto;
-
-import cz.eg.hr.mapper.JavascriptFrameworkMapper;
 import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 
 public class JavascriptFrameworkDTO {
     private Long id;
     private String name;
+    private Long version;
+    private LocalDateTime date;
+    private int reating;
 
     @Override
     public boolean equals(Object o) {
@@ -25,11 +27,6 @@ public class JavascriptFrameworkDTO {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getVersion(), getDate(), getReating());
     }
-
-    private Long version;
-    private LocalDateTime date;
-    private int reating;
-
     public Long getId() {
         return id;
     }

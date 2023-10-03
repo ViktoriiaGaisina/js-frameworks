@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ActiveProfiles("test")
@@ -79,9 +80,12 @@ class JavascriptFrameworkServiceTest {
     }
 
     private JavascriptFrameworkDTO createDTO() {
-        return JavascriptFrameworkDTO.builder()
-            .name("Nikola")
-            .reating(3)
-            .version(3L).build();
+        JavascriptFrameworkDTO dto = new JavascriptFrameworkDTO();
+        dto.setId(1L);
+        dto.setName("Nikola");
+        dto.setReating(3);
+        dto.setVersion(3L);
+        dto.setDate(LocalDateTime.now());
+        return dto;
     }
 }
