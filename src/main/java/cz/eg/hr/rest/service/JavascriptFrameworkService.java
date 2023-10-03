@@ -21,33 +21,37 @@ public class JavascriptFrameworkService {
         this.javascriptFrameworkMapper = javascriptFrameworkMapper;
         this.javascriptFrameworkRepository = javascriptFrameworkRepository;
     }
+
     public List<JavascriptFrameworkDTO> getAll() {
         return javascriptFrameworkRepository.findAll().stream()
-            .map(javascriptFrameworkMapper::toDto)
+            .map(javascriptFramework -> javascriptFrameworkMapper.toDto(javascriptFramework))
             .collect(Collectors.toList());
     }
+
     public JavascriptFrameworkDTO save(JavascriptFrameworkDTO dto) {
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(dto);
         JavascriptFramework javascriptFrameworkEntity = javascriptFrameworkRepository.save(javascriptFramework);
         return javascriptFrameworkMapper.toDto(javascriptFrameworkEntity);
     }
+
     public JavascriptFrameworkDTO updateById(Long id, JavascriptFrameworkDTO dto) {
         JavascriptFramework javascriptFramework = javascriptFrameworkRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("javascriptFramework not found"));
         javascriptFramework.setDate(dto.getDate());
         javascriptFramework.setVersion(dto.getVersion());
-        JavascriptFramework javascriptFramework1 = javascriptFrameworkRepository.save(javascriptFramework);
-        return javascriptFrameworkMapper.toDto(javascriptFramework1);
+        JavascriptFramework updatedJavascriptFramework = javascriptFrameworkRepository.save(javascriptFramework);
+        return javascriptFrameworkMapper.toDto(updatedJavascriptFramework);
     }
+
     public void deleteById(Long id) {
         JavascriptFramework javascriptFramework = javascriptFrameworkRepository.findById(id)
             .orElseThrow(() ->new EntityNotFoundException("javascriptFramework not found"));
         javascriptFrameworkRepository.delete(javascriptFramework);
     }
+
     public JavascriptFrameworkDTO getFrameworkByName(String name) {
         JavascriptFramework javascriptFramework = javascriptFrameworkRepository.findByNameContainingIgnoreCase(name)
             .orElseThrow(() -> new EntityNotFoundException("javascriptFramework not found"));
         return javascriptFrameworkMapper.toDto(javascriptFramework);
     }
-
 }

@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import java.util.List;
 
+import java.util.List;
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = JavascriptFrameworkService.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,25 +31,25 @@ class JavascriptFrameworkServiceTest {
     }
 
     @Test
-    void getAll() {
+    void testGetAllReturnsAllSavedFrameworks() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
         javascriptFrameworkRepository.save(javascriptFramework);
-        javascriptFrameworkService = new JavascriptFrameworkService(javascriptFrameworkMapper, javascriptFrameworkRepository);
         List<JavascriptFrameworkDTO> javascriptFrameworkDTOS = javascriptFrameworkService.getAll();
-        Assertions.assertEquals(javascriptFrameworkDTOS.size(), 1);
+        Assertions.assertEquals(1, javascriptFrameworkDTOS.size());
     }
 
     @Test
-    void save() {JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
-        JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
+    void testSaveSavesJavascriptFramework() {
+        JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         javascriptFrameworkService.save(javascriptFrameworkDTO);
         List<JavascriptFramework> allFrameworks = javascriptFrameworkRepository.findAll();
-        Assertions.assertTrue(allFrameworks.contains(javascriptFramework));
+        Assertions.assertEquals(1, allFrameworks.size());
+        Assertions.assertEquals(javascriptFrameworkDTO.getName(), allFrameworks.get(0).getName());
     }
 
     @Test
-    void updateById() {
+    void testUpdateByIdUpdatesJavascriptFramework() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
         javascriptFrameworkRepository.save(javascriptFramework);
@@ -60,7 +60,7 @@ class JavascriptFrameworkServiceTest {
     }
 
     @Test
-    void deleteById() {
+    void testDeleteByIdDeletesJavascriptFramework() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
         javascriptFrameworkRepository.save(javascriptFramework);
@@ -70,7 +70,7 @@ class JavascriptFrameworkServiceTest {
     }
 
     @Test
-    void getFrameworkByName() {
+    void testGetFrameworkByNameReturnsFrameworkByName() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
         javascriptFrameworkRepository.save(javascriptFramework);
