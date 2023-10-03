@@ -1,11 +1,8 @@
 package cz.eg.hr.data;
 
 import lombok.*;
-import org.hibernate.annotations.Entity;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
