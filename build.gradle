@@ -20,6 +20,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
     implementation group: 'org.mapstruct', name: 'mapstruct', version: '1.5.5.Final'
+    implementation group: 'org.mapstruct', name: 'mapstruct-processor', version: '1.5.5.Final'
     implementation 'io.springfox:springfox-swagger2:2.9.2'
     testImplementation group: 'com.h2database', name: 'h2', version: '2.1.210'
     implementation 'jakarta.servlet:jakarta.servlet-api:4.0.3'

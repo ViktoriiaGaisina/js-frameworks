@@ -2,7 +2,6 @@ package cz.eg.hr.dto;
 
 import cz.eg.hr.mapper.JavascriptFrameworkMapper;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @Builder
