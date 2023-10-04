@@ -1,5 +1,6 @@
 package cz.eg.hr.rest.service;
 
+import cz.eg.hr.Application;
 import cz.eg.hr.data.JavascriptFramework;
 import cz.eg.hr.dto.JavascriptFrameworkDTO;
 import cz.eg.hr.mapper.JavascriptFrameworkMapper;
@@ -10,12 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
 @ActiveProfiles("test")
-@SpringBootTest(classes = JavascriptFrameworkService.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class JavascriptFrameworkServiceTest {
     @Autowired
     private JavascriptFrameworkService javascriptFrameworkService;
@@ -25,7 +25,6 @@ class JavascriptFrameworkServiceTest {
 
     @Autowired
     JavascriptFrameworkMapper javascriptFrameworkMapper;
-
     @AfterEach
     public void cleanUpEach() {
         javascriptFrameworkRepository.deleteAll();
@@ -53,10 +52,12 @@ class JavascriptFrameworkServiceTest {
     void testUpdateByIdUpdatesJavascriptFramework() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
-        javascriptFrameworkRepository.save(javascriptFramework);
+        JavascriptFramework savedJavascriptFramework = javascriptFrameworkRepository.save(javascriptFramework);
+        Assertions.assertNotNull(savedJavascriptFramework);
+        Assertions.assertNotNull(savedJavascriptFramework.getId());
         javascriptFrameworkDTO.setVersion(4L);
-        javascriptFrameworkService.updateById(javascriptFramework.getId(), javascriptFrameworkDTO);
-        JavascriptFramework updatedFramework = javascriptFrameworkRepository.findById(javascriptFramework.getId()).get();
+        javascriptFrameworkService.updateById(savedJavascriptFramework.getId(), javascriptFrameworkDTO);
+        JavascriptFramework updatedFramework = javascriptFrameworkRepository.findById(savedJavascriptFramework.getId()).get();
         Assertions.assertEquals(4L, updatedFramework.getVersion());
     }
 
@@ -64,10 +65,14 @@ class JavascriptFrameworkServiceTest {
     void testDeleteByIdDeletesJavascriptFramework() {
         JavascriptFrameworkDTO javascriptFrameworkDTO = createDTO();
         JavascriptFramework javascriptFramework = javascriptFrameworkMapper.toEntity(javascriptFrameworkDTO);
-        javascriptFrameworkRepository.save(javascriptFramework);
-        javascriptFrameworkService.deleteById(javascriptFramework.getId());
-        boolean exists = javascriptFrameworkRepository.existsById(javascriptFramework.getId());
-        Assertions.assertFalse(exists);
+        JavascriptFramework savedJavascriptFramework = javascriptFrameworkRepository.save(javascriptFramework);
+        Assertions.assertNotNull(savedJavascriptFramework);
+        Assertions.assertNotNull(savedJavascriptFramework.getId());
+        boolean existsBeforeDelete = javascriptFrameworkRepository.existsById(savedJavascriptFramework.getId());
+        Assertions.assertTrue(existsBeforeDelete);
+        javascriptFrameworkService.deleteById(savedJavascriptFramework.getId());
+        boolean existsAfterDelete = javascriptFrameworkRepository.existsById(savedJavascriptFramework.getId());
+        Assertions.assertFalse(existsAfterDelete);
     }
 
     @Test
